@@ -20,6 +20,8 @@
 <script>
     var options = <% = Model.ToJsonCamel() %>;
 
+
+
     var gridOptions = {
         defaultColDef: {
             sortable: true,
@@ -27,9 +29,9 @@
             filter: true
         },
 
-        columnDefs: columnDefs,
+        columnDefs: options.columns,
 
-        rowModelType: 'enterprise',
+        rowModelType: 'serverSide',
 
         enableSorting: true,
         

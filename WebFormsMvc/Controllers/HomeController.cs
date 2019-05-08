@@ -55,7 +55,7 @@ namespace WebFormsMvc.Controllers
             {
                 Data = data,
 
-                LastRow = null
+                LastRow = 1000
             };
 
             return JsonConvert.SerializeObject(response, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });

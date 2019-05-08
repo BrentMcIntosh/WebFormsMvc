@@ -122,7 +122,6 @@
     <Compile Include="Models\AgGrid\GetRowsRequest.cs" />
     <Compile Include="Models\AgGrid\GetRowsResponse.cs" />
     <Compile Include="Models\AgGrid\GridRequest.cs" />
-    <Compile Include="Models\AgGrid\MyRow.cs" />
     <Compile Include="Models\AgGrid\SortModel.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="NHibernateSession.cs" />
