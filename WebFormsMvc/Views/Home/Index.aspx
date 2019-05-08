@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>Test Page</title>
-
     
     <script src="https://unpkg.com/ag-grid-enterprise@20.2.0/dist/ag-grid-enterprise.js"></script>
     
@@ -19,23 +18,7 @@
 <div id="myGrid" style="height: 800px; width: 100%;" class="ag-theme-balham"></div>
 
 <script>
-
-    var renderSplitLink = function (params) {
-        return '<a href="' + params.value + '">Split</a>';
-    }
-
     var options = <% = Model.ToJsonCamel() %>;
-
-    var actionColumn = {
-        headerName: "Action",
-        editable: false,
-        field: "action",
-        cellRenderer: renderSplitLink
-    };
-
-    var columnDefs = options.columns;
-
-    columnDefs.push(actionColumn);
 
     var gridOptions = {
         defaultColDef: {
@@ -94,20 +77,6 @@
         
         gridOptions.api.setEnterpriseDatasource(new EnterpriseDataSource());
     });
-
-    function onPageSizeChanged(newPageSize) {
-        
-        var value = document.getElementById('page-size').value;
-        
-        gridOptions.api.paginationSetPageSize(Number(value));
-    }
-
-    function onGoToPage() {
-
-        var page =  parseInt(document.getElementById("goToPage").value);
-
-        gridOptions.api.paginationGoToPage(page);
-    }
 
 </script>
 
