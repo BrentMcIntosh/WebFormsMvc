@@ -20,14 +20,13 @@
 <script>
     var options = <% = Model.ToJsonCamel() %>;
 
-
-
     var gridOptions = {
-        defaultColDef: {
-            sortable: true,
-            resizable: true,
-            filter: true
-        },
+
+        //defaultColDef: {
+        //    sortable: true,
+        //    resizable: true,
+        //    filter: true
+        //},
 
         columnDefs: options.columns,
 
@@ -35,7 +34,7 @@
 
         enableSorting: true,
         
-        enableFilter: true,
+        // enableFilter: true,
         
         pagination: true,
 

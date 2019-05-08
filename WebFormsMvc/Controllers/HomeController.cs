@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
@@ -13,30 +15,44 @@ namespace WebFormsMvc.Controllers
     {
         public ActionResult Index()
         {
-            var model = new AgGridModel
+            return View(AgGridModel.GetSample());
+        }
+
+        private static string FirstCharToUpper(string s)
+        {
+            if (string.IsNullOrEmpty(s))
             {
-                Columns = new List<AgGridColumn>
-                {
-                    new AgGridColumn { HeaderName = "Id", Field = "id" },
-                    new AgGridColumn { HeaderName = "Name", Field = "name" },
-                    new AgGridColumn { HeaderName = "Born", Field = "born" },
-                    new AgGridColumn { HeaderName = "Cost", Field = "cost" },
-                    new AgGridColumn { HeaderName = "Good", Field = "good" }
-                },
+                return s;
+            }
 
-                CallBackMethod = "/Home/GetRows"
-            };
+            return char.ToUpper(s[0]) + s.Substring(1);
+        }
 
-            return View(model);
+        public static IQueryable<SampleData> Sort(IQueryable<SampleData> collection, string sortBy, bool reverse = false)
+        {
+            return collection.OrderBy(sortBy + (reverse ? " descending" : ""));
         }
 
         public string GetRows(GetRowsRequest request)
         {
             var data = new List<Dictionary<string, object>>();
 
+            var count = 7;
+
             using (var session = NHibernateSession.OpenSession())
             {
-                var items = session.Query<SampleData>().ToList();
+                var items = session.Query<SampleData>().Take(count).ToList();
+
+                if (request?.SortModel != null && request.SortModel.Count > 0)
+                {
+                    var sort = request.SortModel[0];
+
+                    var columnName = FirstCharToUpper(sort.ColId);
+
+                    var direction = sort.Sort;
+
+                    items = new List<SampleData>(Sort(items.AsQueryable(), columnName, direction == "desc"));
+                }
 
                 foreach (var item in items)
                 {
@@ -55,7 +71,7 @@ namespace WebFormsMvc.Controllers
             {
                 Data = data,
 
-                LastRow = 1000
+                LastRow = count
             };
 
             return JsonConvert.SerializeObject(response, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });

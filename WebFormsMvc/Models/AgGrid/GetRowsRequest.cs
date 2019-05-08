@@ -22,7 +22,7 @@ namespace WebFormsMvc.Models.AgGrid
 
         public List<string> GroupKeys { get; set; }
 
-        public Dictionary<string, ColumnFilter> FilterModel { get; set; }
+        public FilterModel FilterModel { get; set; }
 
         public List<SortModel> SortModel { get; set; }
     }

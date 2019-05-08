@@ -8,6 +8,14 @@ namespace WebFormsMvc.Models.AgGrid
     {
         public string HeaderName { get; set; }
         public string Field { get; set; }
+        public string Filter { get; set; }
+        public FilterParams FilterParams { get; set; }
+    }
+
+    public class FilterParams
+    {
+        public bool ApplyButton { get; set; }
+        public bool ClearButton { get; set; }
     }
 
     public class AgGridModel
@@ -19,6 +27,23 @@ namespace WebFormsMvc.Models.AgGrid
         public string ToJsonCamel()
         {
             return JsonConvert.SerializeObject(this, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        }
+
+        public static AgGridModel GetSample()
+        {
+            return new AgGridModel
+            {
+                Columns = new List<AgGridColumn>
+                {
+                    new AgGridColumn { HeaderName = "Id", Field = "id" },
+                    new AgGridColumn { HeaderName = "Name", Field = "name", Filter = "agTextColumnFilter", FilterParams = new FilterParams { ApplyButton = true, ClearButton = true } },
+                    new AgGridColumn { HeaderName = "Born", Field = "born", Filter = "agDateColumnFilter", FilterParams = new FilterParams { ApplyButton = true, ClearButton = true } },
+                    new AgGridColumn { HeaderName = "Cost", Field = "cost", Filter = "agNumberColumnFilter", FilterParams = new FilterParams { ApplyButton = true, ClearButton = true } },
+                    new AgGridColumn { HeaderName = "Good", Field = "good" }
+                },
+
+                CallBackMethod = "/Home/GetRows"
+            };
         }
     }
 }
