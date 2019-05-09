@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NHibernate.Linq;
+using WebFormsMvc.Extensions;
 using WebFormsMvc.Filters;
 using WebFormsMvc.Models;
 using WebFormsMvc.Models.AgGrid;
@@ -20,16 +21,6 @@ namespace WebFormsMvc.Controllers
             return View(AgGridModel.GetSample());
         }
 
-        private static string FirstCharToUpper(string s)
-        {
-            if (string.IsNullOrEmpty(s))
-            {
-                return s;
-            }
-
-            return char.ToUpper(s[0]) + s.Substring(1);
-        }
-
         public static IQueryable<SampleData> Sort(IQueryable<SampleData> collection, string sortBy, bool reverse = false)
         {
             return collection.OrderBy(sortBy + (reverse ? " descending" : ""));
@@ -37,21 +28,9 @@ namespace WebFormsMvc.Controllers
 
         public static ExpressionFilter GetFilter(Condition condition, string columnName)
         {
-
-
             condition.Type = condition.Type.Replace("equals", "equal");
 
-            if (condition.DateFrom != null)
-            {
-
-            }
-
-            if (condition.DateTo != null)
-            {
-
-            }
-
-            if (Enum.Parse(typeof(Comparison), FirstCharToUpper(condition.Type)) is Comparison compare)
+            if (Enum.Parse(typeof(Comparison), condition.Type.FirstCharToUpper()) is Comparison compare)
             {
                 return new ExpressionFilter
                 {
@@ -64,29 +43,29 @@ namespace WebFormsMvc.Controllers
             return null;
         }
 
-        public static List<SampleData> HandleNumbers(Condition condition, string columnName, IQueryable<SampleData> collection)
+        public static string HandleNumbers(Condition condition, string columnName)
         {
             decimal.TryParse(condition.Filter, out var begin);
 
             switch (condition.Type)
             {
                 case "greaterThan":
-                    return collection.Where(columnName + "> @0", begin).ToList();
+                    return $"({columnName} >= {begin})";
 
                 case "notEqual":
-                    return collection.Where(columnName + "!= @0", begin).ToList();
+                    return $"({columnName} != {begin})";
 
                 case "equals":
-                    return collection.Where(columnName + "== @0", begin).ToList();
+                    return $"({columnName} == {begin})";
 
                 case "lessThan":
-                    return collection.Where(columnName + "< @0", begin).ToList();
+                    return $"({columnName} <= {begin})";
 
                 case "inRange":
-                    return collection.Where(columnName + ">= @0 && " + columnName + " < @1", begin, condition.FilterTo).ToList();
+                    return $"(({columnName} >= {begin}) && ({columnName} <= {condition.FilterTo}))";
 
                 default:
-                    return collection.ToList();
+                    return "";
             }
         }
 
@@ -98,7 +77,7 @@ namespace WebFormsMvc.Controllers
             switch (condition.Type)
             {
                 case "greaterThan":
-                    return collection.Where(columnName + "> @0", begin).ToList();
+                    return collection.Where(columnName + ">= @0", begin).ToList();
 
                 case "notEqual":
                     return collection.Where(columnName + "!= @0", begin).ToList();
@@ -107,10 +86,10 @@ namespace WebFormsMvc.Controllers
                     return collection.Where(columnName + "== @0", begin).ToList();
 
                 case "lessThan":
-                    return collection.Where(columnName + "< @0", begin).ToList();
+                    return collection.Where(columnName + "<= @0", begin).ToList();
 
                 case "inRange":
-                    return collection.Where(columnName + ">= @0 && " + columnName + " < @1", begin, end).ToList();
+                    return collection.Where(columnName + ">= @0 && " + columnName + " <= @1", begin, end).ToList();
 
                 default:
                     return collection.ToList();
@@ -125,16 +104,23 @@ namespace WebFormsMvc.Controllers
             {
                 var columnFilter = filters[key];
 
+                var numberQuery = "";
+
+                var keyUpper = key.FirstCharToUpper();
+
                 if (columnFilter.Condition1 != null)
                 {
                     switch (columnFilter.Condition1.FilterType)
                     {
                         case "date":
-                            return HandleDates(columnFilter.Condition1, FirstCharToUpper(key), collection);
+                            return HandleDates(columnFilter.Condition1, keyUpper, collection);
+
                         case "number":
-                            return HandleNumbers(columnFilter.Condition1, FirstCharToUpper(key), collection);
+                            numberQuery = HandleNumbers(columnFilter.Condition1, keyUpper);
+                            break;
+
                         default:
-                            expressionFilters.Add(GetFilter(columnFilter.Condition1, FirstCharToUpper(key)));
+                            expressionFilters.Add(GetFilter(columnFilter.Condition1, keyUpper));
                             break;
                     }
                 }
@@ -144,11 +130,18 @@ namespace WebFormsMvc.Controllers
                     switch (columnFilter.Condition2.FilterType)
                     {
                         case "date":
-                            return HandleDates(columnFilter.Condition2, FirstCharToUpper(key), collection);
+                            return HandleDates(columnFilter.Condition2, keyUpper, collection);
+
                         case "number":
-                            return HandleNumbers(columnFilter.Condition2, FirstCharToUpper(key), collection);
+
+                            var joiner = columnFilter.Operator == "AND" ? "&&" : "||";
+
+                            numberQuery = $"{numberQuery} {joiner} {HandleNumbers(columnFilter.Condition2, keyUpper)}";
+
+                            break;
+
                         default:
-                            expressionFilters.Add(GetFilter(columnFilter.Condition2, FirstCharToUpper(key)));
+                            expressionFilters.Add(GetFilter(columnFilter.Condition2, keyUpper));
                             break;
                     }
                 }
@@ -158,13 +151,21 @@ namespace WebFormsMvc.Controllers
                     switch (columnFilter.FilterType)
                     {
                         case "date":
-                            return HandleDates(columnFilter, FirstCharToUpper(key), collection);
+                            return HandleDates(columnFilter, keyUpper, collection);
+
                         case "number":
-                            return HandleNumbers(columnFilter, FirstCharToUpper(key), collection);
+                            numberQuery = HandleNumbers(columnFilter, keyUpper);
+                            break;
+
                         default:
-                            expressionFilters.Add(GetFilter(columnFilter, FirstCharToUpper(key)));
+                            expressionFilters.Add(GetFilter(columnFilter, keyUpper));
                             break;
                     }
+                }
+
+                if (!string.IsNullOrWhiteSpace(numberQuery))
+                {
+                    return collection.Where(numberQuery).ToList();
                 }
 
                 var expressionTree = ConstructAndExpressionTree.MakeTree<SampleData>(expressionFilters, columnFilter.Operator);
@@ -191,7 +192,7 @@ namespace WebFormsMvc.Controllers
                 {
                     var sort = request.SortModel[0];
 
-                    var columnName = FirstCharToUpper(sort.ColId);
+                    var columnName = sort.ColId.FirstCharToUpper();
 
                     var direction = sort.Sort;
 

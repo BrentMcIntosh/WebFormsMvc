@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Web;
+using WebFormsMvc.Extensions;
+
 using static WebFormsMvc.Filters.Comparison;
 
 namespace WebFormsMvc.Filters
 {
     public static class ExpressionRetriever
     {
-        private static readonly MethodInfo ContainsMethod = typeof(string).GetMethod("Contains");
+        private static readonly MethodInfo ContainsMethod = typeof(Str).GetMethod("ContainsExt", new Type[] { typeof(string), typeof(StringComparison) });
 
-        private static readonly MethodInfo StartsWithMethod = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string) });
+        private static readonly MethodInfo StartsWithMethod = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string), typeof(StringComparison) });
 
-        private static readonly MethodInfo EndsWithMethod = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string) });
+        private static readonly MethodInfo EndsWithMethod = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string), typeof(StringComparison) });
 
         public static Expression GetExpression<T>(ParameterExpression param, ExpressionFilter filter)
         {
             var member = Expression.Property(param, filter.PropertyName);
 
             var constant = Expression.Constant(filter.Value);
+
+            var ignore = Expression.Constant(StringComparison.InvariantCultureIgnoreCase);
 
             switch (filter.Comparison)
             {
@@ -43,13 +44,13 @@ namespace WebFormsMvc.Filters
                     return Expression.NotEqual(member, constant);
 
                 case Contains:
-                    return Expression.Call(member, ContainsMethod, constant);
+                    return Expression.Call(member, ContainsMethod, constant, ignore);
 
                 case StartsWith:
-                    return Expression.Call(member, StartsWithMethod, constant);
+                    return Expression.Call(member, StartsWithMethod, constant, ignore);
 
                 case EndsWith:
-                    return Expression.Call(member, EndsWithMethod, constant);
+                    return Expression.Call(member, EndsWithMethod, constant, ignore);
 
                 default:
                     return null;

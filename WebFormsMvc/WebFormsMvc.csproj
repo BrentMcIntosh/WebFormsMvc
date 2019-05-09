@@ -116,6 +116,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Filters\Comparison.cs" />
     <Compile Include="Filters\ConstructAndExpressionTree.cs" />
     <Compile Include="Filters\ExpressionFilter.cs" />
