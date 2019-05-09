@@ -124,7 +124,6 @@
     <Compile Include="Models\AgGrid\ColumnVO.cs" />
     <Compile Include="Models\AgGrid\GetRowsRequest.cs" />
     <Compile Include="Models\AgGrid\GetRowsResponse.cs" />
-    <Compile Include="Models\AgGrid\GridRequest.cs" />
     <Compile Include="Models\AgGrid\SortModel.cs" />
     <Compile Include="Models\SampleData.cs" />
     <Compile Include="NHibernateSession.cs" />
@@ -137,12 +136,6 @@
     <Content Include="Models\hibernate.cfg.xml" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup />

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace WebFormsMvc.Models.AgGrid
+﻿namespace WebFormsMvc.Models.AgGrid
 {
     /// <summary>
     /// pass a VO (Value Object) of the column and not the column itself,

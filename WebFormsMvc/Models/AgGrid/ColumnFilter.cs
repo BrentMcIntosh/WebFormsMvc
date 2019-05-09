@@ -1,5 +1,5 @@
 ﻿
-namespace Model.AgGrid
+namespace WebFormsMvc.Models.AgGrid
 {
     public class ColumnFilter
     {
