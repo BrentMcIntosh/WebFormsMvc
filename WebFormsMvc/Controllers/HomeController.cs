@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NHibernate.Linq;
+using WebFormsMvc.Filters;
 using WebFormsMvc.Models;
 using WebFormsMvc.Models.AgGrid;
 
@@ -32,6 +35,148 @@ namespace WebFormsMvc.Controllers
             return collection.OrderBy(sortBy + (reverse ? " descending" : ""));
         }
 
+        public static ExpressionFilter GetFilter(Condition condition, string columnName)
+        {
+
+
+            condition.Type = condition.Type.Replace("equals", "equal");
+
+            if (condition.DateFrom != null)
+            {
+
+            }
+
+            if (condition.DateTo != null)
+            {
+
+            }
+
+            if (Enum.Parse(typeof(Comparison), FirstCharToUpper(condition.Type)) is Comparison compare)
+            {
+                return new ExpressionFilter
+                {
+                    PropertyName = columnName,
+                    Comparison = compare,
+                    Value = condition.Filter
+                };
+            }
+
+            return null;
+        }
+
+        public static List<SampleData> HandleNumbers(Condition condition, string columnName, IQueryable<SampleData> collection)
+        {
+            decimal.TryParse(condition.Filter, out var begin);
+
+            switch (condition.Type)
+            {
+                case "greaterThan":
+                    return collection.Where(columnName + "> @0", begin).ToList();
+
+                case "notEqual":
+                    return collection.Where(columnName + "!= @0", begin).ToList();
+
+                case "equals":
+                    return collection.Where(columnName + "== @0", begin).ToList();
+
+                case "lessThan":
+                    return collection.Where(columnName + "< @0", begin).ToList();
+
+                case "inRange":
+                    return collection.Where(columnName + ">= @0 && " + columnName + " < @1", begin, condition.FilterTo).ToList();
+
+                default:
+                    return collection.ToList();
+            }
+        }
+
+        public static List<SampleData> HandleDates(Condition condition, string columnName, IQueryable<SampleData> collection)
+        {
+            DateTime.TryParse(condition.DateFrom, out var begin);
+            DateTime.TryParse(condition.DateTo, out var end);
+
+            switch (condition.Type)
+            {
+                case "greaterThan":
+                    return collection.Where(columnName + "> @0", begin).ToList();
+
+                case "notEqual":
+                    return collection.Where(columnName + "!= @0", begin).ToList();
+
+                case "equals":
+                    return collection.Where(columnName + "== @0", begin).ToList();
+
+                case "lessThan":
+                    return collection.Where(columnName + "< @0", begin).ToList();
+
+                case "inRange":
+                    return collection.Where(columnName + ">= @0 && " + columnName + " < @1", begin, end).ToList();
+
+                default:
+                    return collection.ToList();
+            }
+        }
+
+        public static List<SampleData> Filter(IQueryable<SampleData> collection, Dictionary<string, ColumnFilter> filters)
+        {
+            var expressionFilters = new List<ExpressionFilter>();
+
+            foreach (var key in filters.Keys)
+            {
+                var columnFilter = filters[key];
+
+                if (columnFilter.Condition1 != null)
+                {
+                    switch (columnFilter.Condition1.FilterType)
+                    {
+                        case "date":
+                            return HandleDates(columnFilter.Condition1, FirstCharToUpper(key), collection);
+                        case "number":
+                            return HandleNumbers(columnFilter.Condition1, FirstCharToUpper(key), collection);
+                        default:
+                            expressionFilters.Add(GetFilter(columnFilter.Condition1, FirstCharToUpper(key)));
+                            break;
+                    }
+                }
+
+                if (columnFilter.Condition2 != null)
+                {
+                    switch (columnFilter.Condition2.FilterType)
+                    {
+                        case "date":
+                            return HandleDates(columnFilter.Condition2, FirstCharToUpper(key), collection);
+                        case "number":
+                            return HandleNumbers(columnFilter.Condition2, FirstCharToUpper(key), collection);
+                        default:
+                            expressionFilters.Add(GetFilter(columnFilter.Condition2, FirstCharToUpper(key)));
+                            break;
+                    }
+                }
+
+                if (columnFilter.Condition1 == null)
+                {
+                    switch (columnFilter.FilterType)
+                    {
+                        case "date":
+                            return HandleDates(columnFilter, FirstCharToUpper(key), collection);
+                        case "number":
+                            return HandleNumbers(columnFilter, FirstCharToUpper(key), collection);
+                        default:
+                            expressionFilters.Add(GetFilter(columnFilter, FirstCharToUpper(key)));
+                            break;
+                    }
+                }
+
+                var expressionTree = ConstructAndExpressionTree.MakeTree<SampleData>(expressionFilters, columnFilter.Operator);
+
+                var anonymousFunc = expressionTree.Compile();
+
+                return new List<SampleData>(collection.AsEnumerable().Where(predicate: anonymousFunc));
+            }
+
+            return null;
+        }
+
         public string GetRows(GetRowsRequest request)
         {
             var data = new List<Dictionary<string, object>>();
@@ -51,6 +196,11 @@ namespace WebFormsMvc.Controllers
                     var direction = sort.Sort;
 
                     items = new List<SampleData>(Sort(items.AsQueryable(), columnName, direction == "desc"));
+                }
+
+                if (request?.FilterModel != null && request.FilterModel.Count > 0)
+                {
+                    items = Filter(items.AsQueryable(), request.FilterModel);
                 }
 
                 foreach (var item in items)

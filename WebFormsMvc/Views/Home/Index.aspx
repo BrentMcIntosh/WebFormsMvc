@@ -6,12 +6,8 @@
 <head>
     <title>Test Page</title>
     
-    <script src="https://unpkg.com/ag-grid-enterprise@20.2.0/dist/ag-grid-enterprise.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/ag-grid-enterprise@20.2.0/dist/ag-grid-enterprise.js"></script>
     
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-enterprise@20.2.0/dist/styles/ag-grid.css">
-    
-    <link rel="stylesheet" href="https://unpkg.com/ag-grid-enterprise@20.2.0/dist/styles/ag-theme-balham.css">
-
     </head>
 <body>
 
@@ -22,30 +18,20 @@
 
     var gridOptions = {
 
-        //defaultColDef: {
-        //    sortable: true,
-        //    resizable: true,
-        //    filter: true
-        //},
-
         columnDefs: options.columns,
 
         rowModelType: 'serverSide',
 
-        enableSorting: true,
-        
-        // enableFilter: true,
-        
         pagination: true,
 
         paginationPageSize: 100
     };
 
-    function EnterpriseDataSource() {}
+    function ServerSideDataSource() {}
 
     agGrid.LicenseManager.setLicenseKey("_Not_For_Production_Valid_Until_1_July_2019__MTU2MTkzNTYwMDAwMA==8ea846c82b3280fc8df9f911fc6de1b9");
 
-    EnterpriseDataSource.prototype.getRows = function (params) {
+    ServerSideDataSource.prototype.getRows = function (params) {
 
         const jsonRequest = JSON.stringify(params.request, null, 2);
         
@@ -76,7 +62,7 @@
         
         new agGrid.Grid(gridDiv, gridOptions);
         
-        gridOptions.api.setEnterpriseDatasource(new EnterpriseDataSource());
+        gridOptions.api.setServerSideDatasource(new ServerSideDataSource());
     });
 
 </script>

@@ -4,20 +4,6 @@ using System.Collections.Generic;
 
 namespace WebFormsMvc.Models.AgGrid
 {
-    public class AgGridColumn
-    {
-        public string HeaderName { get; set; }
-        public string Field { get; set; }
-        public string Filter { get; set; }
-        public FilterParams FilterParams { get; set; }
-    }
-
-    public class FilterParams
-    {
-        public bool ApplyButton { get; set; }
-        public bool ClearButton { get; set; }
-    }
-
     public class AgGridModel
     {
         public List<AgGridColumn> Columns { get; set; } = new List<AgGridColumn>();

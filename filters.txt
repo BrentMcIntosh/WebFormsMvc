@@ -1,0 +1,198 @@
+The resource from “https://unpkg.com/ag-grid-enterprise@20.2.0/dist/styles/ag-grid.css” was blocked due to MIME type (“text/plain”) mismatch (X-Content-Type-Options: nosniff). Index
+The resource from “https://unpkg.com/ag-grid-enterprise@20.2.0/dist/styles/ag-theme-balham.css” was blocked due to MIME type (“text/plain”) mismatch (X-Content-Type-Options: nosniff). Index
+The resource from “https://unpkg.com/ag-grid-enterprise@20.2.0/dist/styles/ag-theme-balham.css” was blocked due to MIME type (“text/plain”) mismatch (X-Content-Type-Options: nosniff). Index
+The resource from “https://unpkg.com/ag-grid-enterprise@20.2.0/dist/styles/ag-grid.css” was blocked due to MIME type (“text/plain”) mismatch (X-Content-Type-Options: nosniff). Index
+**************************************************************************************************************** ag-grid-enterprise.js:52558:17
+*************************************** ag-Grid Enterprise License ********************************************* ag-grid-enterprise.js:52559:17
+********************************************* Invalid License ************************************************** ag-grid-enterprise.js:52560:17
+* Your license for ag-Grid Enterprise is not valid - please contact accounts@ag-grid.com to obtain a valid license. * ag-grid-enterprise.js:52561:17
+**************************************************************************************************************** ag-grid-enterprise.js:52562:17
+**************************************************************************************************************** ag-grid-enterprise.js:52563:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {},
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "type": "contains",
+      "filter": "one",
+      "filterType": "text"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "name": {
+      "condition1": {
+        "type": "contains",
+        "filter": "one",
+        "filterType": "text"
+      },
+      "condition2": {
+        "type": "contains",
+        "filter": "two",
+        "filterType": "text"
+      },
+      "operator": "AND"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "born": {
+      "dateTo": null,
+      "dateFrom": "2000-01-01",
+      "type": "equals",
+      "filterType": "date"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "born": {
+      "condition1": {
+        "dateTo": null,
+        "dateFrom": "2001-01-01",
+        "type": "equals",
+        "filterType": "date"
+      },
+      "condition2": {
+        "dateTo": null,
+        "dateFrom": "2001-01-01",
+        "type": "equals",
+        "filterType": "date"
+      },
+      "operator": "AND"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "born": {
+      "dateTo": "2001-02-10",
+      "dateFrom": "2001-01-10",
+      "type": "inRange",
+      "filterType": "date"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "cost": {
+      "condition1": {
+        "type": "inRange",
+        "filter": 1,
+        "filterTo": 10,
+        "filterType": "number"
+      },
+      "condition2": {
+        "type": "inRange",
+        "filter": 4,
+        "filterTo": 90,
+        "filterType": "number"
+      },
+      "operator": "AND"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "cost": {
+      "type": "equals",
+      "filter": 1,
+      "filterTo": null,
+      "filterType": "number"
+    }
+  },
+  "sortModel": []
+} Index:48:17
+{
+  "startRow": 0,
+  "endRow": 100,
+  "rowGroupCols": [],
+  "valueCols": [],
+  "pivotCols": [],
+  "pivotMode": false,
+  "groupKeys": [],
+  "filterModel": {
+    "cost": {
+      "condition1": {
+        "type": "equals",
+        "filter": 3,
+        "filterTo": null,
+        "filterType": "number"
+      },
+      "condition2": {
+        "type": "equals",
+        "filter": 4,
+        "filterTo": null,
+        "filterType": "number"
+      },
+      "operator": "AND"
+    }
+  },
+  "sortModel": []
+} Index:48:17

@@ -116,12 +116,19 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\Comparison.cs" />
+    <Compile Include="Filters\ConstructAndExpressionTree.cs" />
+    <Compile Include="Filters\ExpressionFilter.cs" />
+    <Compile Include="Filters\ExpressionRetriever.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AgGrid\AgGridColumn.cs" />
     <Compile Include="Models\AgGrid\AgGrid.cs" />
     <Compile Include="Models\AgGrid\ColumnFilter.cs" />
     <Compile Include="Models\AgGrid\ColumnVO.cs" />
+    <Compile Include="Models\AgGrid\Condition.cs" />
+    <Compile Include="Models\AgGrid\FilterParams.cs" />
     <Compile Include="Models\AgGrid\GetRowsRequest.cs" />
     <Compile Include="Models\AgGrid\GetRowsResponse.cs" />
     <Compile Include="Models\AgGrid\SortModel.cs" />
