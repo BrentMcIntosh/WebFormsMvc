@@ -3,10 +3,6 @@
     public enum Comparison
     {
         Equal,
-        LessThan,
-        LessThanOrEqual,
-        GreaterThan,
-        GreaterThanOrEqual,
         NotEqual,
         Contains,  
         StartsWith,

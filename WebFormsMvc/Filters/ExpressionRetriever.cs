@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using WebFormsMvc.Extensions;
 
 using static WebFormsMvc.Filters.Comparison;
 
@@ -9,9 +8,11 @@ namespace WebFormsMvc.Filters
 {
     public static class ExpressionRetriever
     {
-        private static readonly MethodInfo ContainsMethod = typeof(Str).GetMethod("ContainsExt", new Type[] { typeof(string), typeof(StringComparison) });
+        private static readonly MethodInfo EqualsMethod = typeof(string).GetMethod("Equals", new Type[] { typeof(string), typeof(StringComparison) });
 
         private static readonly MethodInfo StartsWithMethod = typeof(string).GetMethod("StartsWith", new Type[] { typeof(string), typeof(StringComparison) });
+
+        private static readonly MethodInfo IndexOfMethod = typeof(string).GetMethod("IndexOf", new Type[] { typeof(string), typeof(StringComparison) });
 
         private static readonly MethodInfo EndsWithMethod = typeof(string).GetMethod("EndsWith", new Type[] { typeof(string), typeof(StringComparison) });
 
@@ -26,25 +27,17 @@ namespace WebFormsMvc.Filters
             switch (filter.Comparison)
             {
                 case Equal:
-                    return Expression.Equal(member, constant);
-
-                case GreaterThan:
-                    return Expression.GreaterThan(member, constant);
-
-                case GreaterThanOrEqual:
-                    return Expression.GreaterThanOrEqual(member, constant);
-
-                case LessThan:
-                    return Expression.LessThan(member, constant);
-
-                case LessThanOrEqual:
-                    return Expression.LessThanOrEqual(member, constant);
+                    return Expression.Call(member, EqualsMethod, constant, ignore);
 
                 case NotEqual:
-                    return Expression.NotEqual(member, constant);
+                    var equals = Expression.Call(member, EqualsMethod, constant, ignore);
+
+                    return Expression.NotEqual(equals, Expression.Constant(true));
 
                 case Contains:
-                    return Expression.Call(member, ContainsMethod, constant, ignore);
+                    var indexOf = Expression.Call(member, IndexOfMethod, constant, ignore);
+
+                    return Expression.NotEqual(indexOf, Expression.Constant(-1));
 
                 case StartsWith:
                     return Expression.Call(member, StartsWithMethod, constant, ignore);
