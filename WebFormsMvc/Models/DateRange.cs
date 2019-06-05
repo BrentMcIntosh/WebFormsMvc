@@ -7,13 +7,15 @@ namespace WebFormsMvc.Models
 {
     public class DateRange
     {
-        public DateTime Start { get; set; }
-
-        public DateTime Finish { get; set; }
+        public int Id { get; set; }
 
         public string Range { get; set; }
 
         public string RangeValue { get; set; }
+
+        public DateTime Start { get; set; }
+
+        public DateTime Finish { get; set; }
 
         public string SelectedRange(string option)
         {
@@ -27,7 +29,7 @@ namespace WebFormsMvc.Models
 
         public string Visibility(string option)
         {
-            var display = (Range == option) ? "block" : "none";
+            var display = (Range == option) ? "inline" : "none";
 
             return $"style='display:{display};'";
         }
@@ -43,6 +45,7 @@ namespace WebFormsMvc.Models
 
         public DateRange(int id, string range, string rangeValue)
         {
+            Id = id;
             Range = range;
             RangeValue = rangeValue;
 
