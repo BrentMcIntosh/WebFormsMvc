@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Web;
 using WebFormsMvc.Extensions;
 using WebFormsMvc.Models;
 using WebFormsMvc.Models.AgGrid;
@@ -117,7 +116,7 @@ namespace WebFormsMvc.Filters
                     switch (columnFilter.FilterType)
                     {
                         case "date":
-                            return DatesFilter.HandleDatesSingle(columnFilter.Condition1, keyUpper, collection);
+                            return DatesFilter.HandleDatesSingle(columnFilter, keyUpper, collection);
 
                         case "number":
                             numberQuery = HandleNumbers(columnFilter, keyUpper);

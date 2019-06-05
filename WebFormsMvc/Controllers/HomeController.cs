@@ -22,11 +22,13 @@ namespace WebFormsMvc.Controllers
         {
             var data = new List<Dictionary<string, object>>();
 
-            var count = 7;
+            var skip = request.StartRow;
+
+            var take = request.EndRow - request.StartRow;
 
             using (var session = NHibernateSession.OpenSession())
             {
-                var items = session.Query<SampleData>().Take(count).ToList();
+                var items = session.Query<SampleData>().ToList();
 
                 if (request?.SortModel != null && request.SortModel.Count > 0)
                 {
@@ -41,7 +43,7 @@ namespace WebFormsMvc.Controllers
 
                 if (request?.FilterModel != null && request.FilterModel.Count > 0)
                 {
-                    items = GeneralFilter.Filter(items.AsQueryable(), request.FilterModel);
+                    items = GeneralFilter.Filter(items.AsQueryable(), request.FilterModel).Skip(skip).Take(take).ToList();
                 }
 
                 foreach (var item in items)
@@ -61,7 +63,7 @@ namespace WebFormsMvc.Controllers
             {
                 Data = data,
 
-                LastRow = count
+                LastRow = data.Count
             };
 
             return JsonConvert.SerializeObject(response, new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() });

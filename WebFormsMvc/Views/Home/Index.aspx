@@ -24,7 +24,7 @@
 
         pagination: true,
 
-        paginationPageSize: 100
+        paginationPageSize: 20
     };
 
     function ServerSideDataSource() {}

@@ -119,8 +119,10 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Filters\Comparison.cs" />
     <Compile Include="Filters\ConstructAndExpressionTree.cs" />
+    <Compile Include="Filters\DatesFilter.cs" />
     <Compile Include="Filters\ExpressionFilter.cs" />
     <Compile Include="Filters\ExpressionRetriever.cs" />
+    <Compile Include="Filters\GeneralFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
