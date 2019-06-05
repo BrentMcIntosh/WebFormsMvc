@@ -8,7 +8,7 @@
 
         if (range === 'YearToDate' || range === 'PreviousTwelveMonths') {
 
-            changeRange(range, '');
+            changeDataRange(range, '');
         }
         else {
 
@@ -45,10 +45,10 @@
 
         let range = document.getElementById('rangePicker').selectedOptions[0].value;
 
-        changeRange(range, rangeValue);
+        changeDataRange(range, rangeValue);
     }
 
-    function changeRange(range, rangeValue) {
+    function changeDataRange(range, rangeValue) {
 
         let id = <% = Model.Id %>;
 
