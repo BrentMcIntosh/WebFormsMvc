@@ -3,7 +3,7 @@ using System;
 
 using System.Web.Mvc;
 
-using WebFormsMvc.Models;
+using Web.Models;
 
 namespace WebFormsMvc.Controllers
 {

@@ -1,15 +1,47 @@
-﻿
-using System;
-
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
+using System.Web.Mvc;
 
-namespace WebFormsMvc.Models
+namespace Web.Models
 {
+    public enum RangeChoices
+    {
+        [Description("Year To Date")]
+        YearToDate,
+        [Description("Previous Twelve Months")]
+        PreviousTwelveMonths,
+        Months,
+        Quarters,
+        [Description("Calendar Years")]
+        CalendarYears
+    }
+
+    /// <remarks>
+    /// I am using the start month to get the time span 
+    /// </remarks>
+    public enum QuarterChoices
+    {
+        [Description("Please Choose a Quarter")]
+        PleaseChoose = 0,
+        First = 1,
+        Second = 4,
+        Third = 7,
+        Fourth = 10
+    }
+
     public class DateRange
     {
         public int Id { get; set; }
 
-        public string Range { get; set; }
+        public RangeChoices ChosenRange { get; set; }
+
+        public QuarterChoices ChosenQuarter { get; set; }
+
+        public IEnumerable<SelectListItem> Years { get; set; }
+
+        public IEnumerable<SelectListItem> Months { get; set; }
 
         public string RangeValue { get; set; }
 
@@ -17,97 +49,164 @@ namespace WebFormsMvc.Models
 
         public DateTime Finish { get; set; }
 
-        public string SelectedRange(string option)
-        {
-            return (Range == option) ? "selected='selected'" : "";
-        }
-
-        public string SelectedValue(string option)
-        {
-            return (RangeValue == option) ? "selected='selected'" : "";
-        }
-
-        public string Visibility(string option)
-        {
-            var display = (Range == option) ? "inline" : "none";
-
-            return $"style='display:{display};'";
-        }
+        public string Information { get; set; }
 
         private static readonly DateTime NOW = DateTime.UtcNow;
-        private static readonly DateTime TOMORROW = NOW.AddDays(1);
         private static readonly int CURRENT_YEAR = NOW.Year;
-        private static readonly DateTime JANUARY_FIRST = new DateTime(CURRENT_YEAR, 1, 1);
-        private static readonly DateTime APRIL_FIRST = new DateTime(CURRENT_YEAR, 4, 1);
-        private static readonly DateTime JULY_FIRST = new DateTime(CURRENT_YEAR, 7, 1);
-        private static readonly DateTime OCTOBER_FIRST = new DateTime(CURRENT_YEAR, 10, 1);
-        private static readonly DateTime NEXT_JANUARY_FIRST = new DateTime(CURRENT_YEAR + 1, 1, 1);
 
         public DateRange(int id, string range, string rangeValue)
         {
             Id = id;
-            Range = range;
+
             RangeValue = rangeValue;
 
-            Start = JANUARY_FIRST;
-            Finish = TOMORROW;
+            var rangeValueAsNumber = 0;
 
-            if (range == "PreviousTwelveMonths")
+            int.TryParse(rangeValue, out rangeValueAsNumber);
+
+            ChosenQuarter = QuarterChoices.PleaseChoose;
+
+            ChosenRange = (RangeChoices)Enum.Parse(typeof(RangeChoices), range);
+
+            GetRange(rangeValue, rangeValueAsNumber);
+
+            Months = GetMonths(rangeValueAsNumber);
+
+            Years = GetYears(rangeValueAsNumber);
+
+            Information = $"You will see information for things that occurred on or after {Start.ToLongDateString()} and before {Finish.ToLongDateString()}";
+        }
+
+        public void GetRange(string rangeValue, int rangeValueAsNumber)
+        {
+            switch (ChosenRange)
             {
-                Start = NOW.AddYears(-1);
-                Finish = NOW;
+                case RangeChoices.PreviousTwelveMonths:
+                    Start = NOW.AddYears(-1);
+                    Finish = NOW;
+                    break;
+
+                case RangeChoices.Months:
+                    Start = new DateTime(CURRENT_YEAR, rangeValueAsNumber, 1);
+                    Finish = Start.AddMonths(1);
+                    break;
+
+                case RangeChoices.Quarters:
+                    Start = GetQuarterStart(rangeValue);
+                    Finish = Start.AddMonths(3);
+                    break;
+
+                case RangeChoices.CalendarYears:
+                    Start = new DateTime(rangeValueAsNumber, 1, 1);
+                    Finish = Start.AddYears(1);
+                    break;
+
+                default:
+                    Start = new DateTime(CURRENT_YEAR, 1, 1);
+                    Finish = NOW.AddDays(1);
+                    break;
             }
-            else if (range == "Months")
+        }
+
+        private DateTime GetQuarterStart(string rangeValue)
+        {
+            ChosenQuarter = (QuarterChoices)Enum.Parse(typeof(QuarterChoices), rangeValue);
+
+            return new DateTime(CURRENT_YEAR, (int)ChosenQuarter, 1);
+        }
+
+        private IEnumerable<SelectListItem> GetYears(int chosen)
+        {
+            var years = new List<SelectListItem>
             {
-                var month = DateTime.ParseExact(rangeValue, "MMMM", CultureInfo.CurrentCulture).Month;
-
-                var thisMonth = month;
-                var nextMonth = (month + 1);
-
-                var endYear = CURRENT_YEAR;
-
-                if (month == 12)
+                new SelectListItem
                 {
-                    nextMonth = 1;
-
-                    endYear = CURRENT_YEAR + 1;
+                    Text = "Please Choose a Year"
                 }
+            };
 
-                Start = new DateTime(CURRENT_YEAR, thisMonth, 1);
-                Finish = new DateTime(endYear, nextMonth, 1);
-            }
-            else if (range == "Quarters")
+            for (var year = CURRENT_YEAR; year > CURRENT_YEAR - 4; year--)
             {
-                switch (rangeValue)
+                years.Add(new SelectListItem
                 {
-                    case "First":
-                        Start = JANUARY_FIRST;
-                        Finish = APRIL_FIRST;
-                        break;
+                    Selected = chosen == year,
+                    Text = $"{year}"
+                });
+            }
 
-                    case "Second":
-                        Start = APRIL_FIRST;
-                        Finish = JULY_FIRST;
-                        break;
+            return years;
+        }
 
-                    case "Third":
-                        Start = JULY_FIRST;
-                        Finish = OCTOBER_FIRST;
-                        break;
+        private IEnumerable<SelectListItem> GetMonths(int chosen)
+        {
+            var months = new List<SelectListItem>
+            {
+                new SelectListItem
+                {
+                    Text = "Please Choose a Month"
+                }
+            };
 
-                    case "Fourth":
-                        Start = OCTOBER_FIRST;
-                        Finish = NEXT_JANUARY_FIRST;
-                        break;
+            var count = 1;
+
+            foreach (var month in DateTimeFormatInfo.CurrentInfo.MonthNames)
+            {
+                if (string.IsNullOrWhiteSpace(month)) continue;
+
+                months.Add(new SelectListItem
+                {
+                    Selected = chosen == count,
+                    Text = month,
+                    Value = $"{count}"
+                });
+
+                count++;
+            }
+
+            return months;
+        }
+
+        public string GetStyle(RangeChoices dropdown)
+        {
+            return ChosenRange == dropdown ? "display: inline" : "display: none";
+        }
+
+        public static List<DateRange> GetAllRanges()
+        {
+            var list = new List<DateRange>();
+
+            foreach (var range in Enum.GetNames(typeof(RangeChoices)))
+            {
+                if (range == "YearToDate" || range == "PreviousTwelveMonths")
+                {
+                    list.Add(new DateRange(0, range, ""));
+                }
+                else if (range == "Months")
+                {
+                    for (var month = 1; month <= 12; month++)
+                    {
+                        list.Add(new DateRange(0, range, $"{month}"));
+                    }
+                }
+                else if (range == "Quarters")
+                {
+                    foreach (var quarter in Enum.GetNames(typeof(QuarterChoices)))
+                    {
+                        if (quarter.StartsWith("Please")) continue;
+
+                        list.Add(new DateRange(0, range, quarter));
+                    }
+                }
+                else if (range == "CalendarYears")
+                {
+                    for (var year = CURRENT_YEAR; year > CURRENT_YEAR - 4; year--)
+                    {
+                        list.Add(new DateRange(0, range, $"{year}"));
+                    }
                 }
             }
-            else if (range == "CalendarYears")
-            {
-                var year = Convert.ToInt32(rangeValue);
 
-                Start = new DateTime(year, 1, 1);
-                Finish = new DateTime(year + 1, 1, 1);
-            }
+            return list;
         }
     }
 }
