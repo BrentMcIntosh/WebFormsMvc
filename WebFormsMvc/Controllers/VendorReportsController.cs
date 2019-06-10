@@ -1,5 +1,4 @@
 ﻿
-using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Web.Mvc;
@@ -16,7 +15,6 @@ namespace WebFormsMvc.Controllers
 
             return View(new DateRange(id, range, rangeValue));
         }
-
 
         void ListAllRanges()
         {
@@ -56,9 +54,6 @@ namespace WebFormsMvc.Controllers
                 row += "</tr>";
 
                 Trace.WriteLine(row);
-
-
-
             }
         }
     }
