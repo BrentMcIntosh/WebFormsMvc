@@ -1,12 +1,10 @@
-﻿<%@ Page Title="" Language="C#" Inherits="System.Web.Mvc.ViewPage<WebFormsMvc.Models.Test>" %>
+﻿<%@ Page Language="C#" %>
 
-<!DOCTYPE html>
+<form method="post" enctype="multipart/form-data">
 
-<html>
-<head>
-    <title>Test Page</title>
-</head>
-<body>
-    <% = Model.Name %>
-</body>
-</html>
+    <input type="file" name="one" />
+
+    <input type="submit" />
+
+</form>
+
