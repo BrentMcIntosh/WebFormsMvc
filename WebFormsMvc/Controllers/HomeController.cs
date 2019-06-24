@@ -9,5 +9,10 @@ namespace WebFormsMvc.Controllers
         {
             return View(new Test());
         }
+
+        public void UploadFiles()
+        {
+            var files = Request.Files;
+        }
     }
 }
