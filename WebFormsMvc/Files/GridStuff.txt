@@ -1,0 +1,19 @@
+		cacheBuster	1556731090531	long
+		filters	"{\"groupOp\":\"AND\",\"rules\":[]}"	string
+		id	null	int?
+		pageNumber	1	int
+		pageSize	25	int
+		searching	false	bool
+		sortColumn	"DateCreated"	string
+		sortOrder	"desc"	string
+		
+		
+		filter 
+		{"groupOp":"AND","rules":[]}
+		
+		type "My" in the Employer column
+		and "Good" in Description
+		{"groupOp":"AND","rules":[{"field":"Employer","op":"bw","data":"My"},{"field":"Description","op":"bw","data":"Good"}]}
+		
+		
+		

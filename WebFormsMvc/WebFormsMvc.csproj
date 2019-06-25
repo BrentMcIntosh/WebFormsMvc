@@ -116,6 +116,7 @@
     <Compile Include="Controllers\DocumentsService.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewUploaderController.cs" />
+    <Compile Include="Controllers\DropzonePlainController.cs" />
     <Compile Include="Controllers\OldUploaderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -126,7 +127,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\CSS\basic.css" />
     <Content Include="Content\CSS\confirmation_print.css" />
+    <Content Include="Content\CSS\dropzone.css" />
+    <Content Include="Content\CSS\DropzoneStyle.css" />
     <Content Include="Content\CSS\Essentials\jadded.min.css" />
     <Content Include="Content\CSS\FA5\ban.png" />
     <Content Include="Content\CSS\FA5\ban.svg" />
@@ -189,12 +193,14 @@
     <Content Include="Content\CSS\sentry_client.css" />
     <Content Include="Content\CSS\sentry_specific.css" />
     <Content Include="Content\Scripts\dropzone.js" />
+    <Content Include="Content\Scripts\DZX.js" />
     <Content Include="Content\Scripts\SB_Uploader.js" />
     <Content Include="Content\Scripts\uploader.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Views\Home\Index.aspx" />
     <Content Include="Views\NewUploader\Index.aspx" />
+    <Content Include="Views\DropzonePlain\Index.aspx" />
     <Content Include="Views\OldUploader\Index.aspx" />
     <Content Include="Views\Shared\Uploader.ascx" />
     <Content Include="Web.config" />
