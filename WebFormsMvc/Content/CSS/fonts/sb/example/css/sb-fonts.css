@@ -1,0 +1,98 @@
+@font-face {
+  font-family: 'sb-fonts';
+  src: url('../font/sb-fonts.eot?50997689');
+  src: url('../font/sb-fonts.eot?50997689#iefix') format('embedded-opentype'),
+       url('../font/sb-fonts.woff2?50997689') format('woff2'),
+       url('../font/sb-fonts.woff?50997689') format('woff'),
+       url('../font/sb-fonts.ttf?50997689') format('truetype'),
+       url('../font/sb-fonts.svg?50997689#sb-fonts') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'sb-fonts';
+    src: url('../font/sb-fonts.svg?50997689#sb-fonts') format('svg');
+  }
+}
+*/
+ 
+ [class^="sbico-"]:before, [class*=" sbico-"]:before {
+  font-family: "sb-fonts";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+ 
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  margin-right: .2em;
+  text-align: center;
+  /* opacity: .8; */
+ 
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+ 
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+ 
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  margin-left: .2em;
+ 
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+ 
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+ 
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+ 
+.sbico-sb-expand:before { content: '\e800'; } /* '' */
+.sbico-sb-file-due:before { content: '\e801'; } /* '' */
+.sbico-sb-hide-settings:before { content: '\e802'; } /* '' */
+.sbico-sb-hide-settings_alt:before { content: '\e803'; } /* '' */
+.sbico-sb-lightning:before { content: '\e804'; } /* '' */
+.sbico-sb-logo:before { content: '\e805'; } /* '' */
+.sbico-sb-logo-head:before { content: '\e806'; } /* '' */
+.sbico-sb-logo-head-o:before { content: '\e807'; } /* '' */
+.sbico-sb-multi-box:before { content: '\e808'; } /* '' */
+.sbico-sb-mute:before { content: '\e809'; } /* '' */
+.sbico-sb-now-logo:before { content: '\e80a'; } /* '' */
+.sbico-sb-open-settings:before { content: '\e80b'; } /* '' */
+.sbico-sb-out-of-office:before { content: '\e80c'; } /* '' */
+.sbico-sb-radio-dot:before { content: '\e80d'; } /* '' */
+.sbico-sb-radio-dot_alt:before { content: '\e80e'; } /* '' */
+.sbico-sb-radio-dot_alt-s:before { content: '\e80f'; } /* '' */
+.sbico-sb-radio-dot-o:before { content: '\e810'; } /* '' */
+.sbico-sb-settings-alt:before { content: '\e811'; } /* '' */
+.sbico-sb-settings-alt-o:before { content: '\e812'; } /* '' */
+.sbico-sb-simpbox1:before { content: '\e813'; } /* '' */
+.sbico-sb-stacked-grid:before { content: '\e814'; } /* '' */
+.sbico-sb-stacked-grid_alt:before { content: '\e815'; } /* '' */
+.sbico-sb-stacked-grid_alt-s:before { content: '\e816'; } /* '' */
+.sbico-sb-storyboard:before { content: '\e817'; } /* '' */
+.sbico-sb-terminate:before { content: '\e818'; } /* '' */
+.sbico-sb-tooltip:before { content: '\e819'; } /* '' */
+.sbico-sb-tooltip-o:before { content: '\e81a'; } /* '' */
+.sbico-sb-tree-connector:before { content: '\e81b'; } /* '' */
+.sbico-sb-user-file:before { content: '\e81c'; } /* '' */
+.sbico-sb-volume:before { content: '\e81d'; } /* '' */
+.sbico-sb-add-file:before { content: '\e81e'; } /* '' */
+.sbico-sb-assign-paytype:before { content: '\e81f'; } /* '' */
+.sbico-sb-compress:before { content: '\e821'; } /* '' */
+.sbico-sb-download-file:before { content: '\e822'; } /* '' */
+.sbico-sb-downloadlist-1:before { content: '\e823'; } /* '' */
+.sbico-sb-drag-lines:before { content: '\e824'; } /* '' */
+.sbico-hm-logo:before { content: '\e825'; } /* '' */
+.sbico-hm-logo-1:before { content: '\e827'; } /* '' */
+.sbico-sb-downloadlist:before { content: '\e828'; } /* '' */
+.sbico-hm-logo-2:before { content: '\e82a'; } /* '' */
+.sbico-hm-logo-light:before { content: '\e82b'; } /* '' */

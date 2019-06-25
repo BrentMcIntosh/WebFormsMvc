@@ -14,15 +14,15 @@ namespace WebFormsMvc.Controllers
         }
 
         [HttpPost]
-        public ActionResult Index(HttpPostedFileBase one)
+        public ActionResult Index(HttpPostedFileBase fileInfo)
         {
-            if (one != null && one.ContentLength > 0)
+            if (fileInfo != null && fileInfo.ContentLength > 0)
             {
-                var fileName = Path.GetFileName(one.FileName);
+                var fileName = Path.GetFileName(fileInfo.FileName);
 
                 var path = Path.Combine(Server.MapPath("~/Files"), fileName);
 
-                one.SaveAs(path);
+                fileInfo.SaveAs(path);
             }
 
             return RedirectToAction("Index");
