@@ -136,3 +136,11 @@ C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\obj\Debug\WebFormsMvc.csproj.Cor
 C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\obj\Debug\WebFormsMvc.csproj.CopyComplete
 C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\obj\Debug\WebFormsMvc.dll
 C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\obj\Debug\WebFormsMvc.pdb
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\Microsoft.Web.Helpers.dll
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\WebMatrix.Data.dll
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\WebMatrix.WebData.dll
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\WebMatrix.Data.xml
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\WebMatrix.WebData.xml
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\Microsoft.Web.Mvc.dll
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\MvcContrib.dll
+C:\github\BrentMcIntosh\WebFormsMvc\WebFormsMvc\bin\MvcContrib.xml

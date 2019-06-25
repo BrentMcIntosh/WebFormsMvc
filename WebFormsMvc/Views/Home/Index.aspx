@@ -1,5 +1,5 @@
-﻿<%@ Page Language="C#" %>
-
+﻿<%@ Page Language="C#" Inherits="System.Web.Mvc.ViewPage<WebFormsMvc.Models.UploaderViewModel>" %>
+<%@ Import Namespace="System.Web.Mvc.Html" %>
 
 <html>
 
@@ -15,54 +15,55 @@
 </head>
 
 <body>
-    <form method="post" enctype="multipart/form-data">
-
-        <div class="uploader files upload-button"></div>
-
-        <input type="submit" />
-
-    </form>
+   
+    <% Html.RenderPartial("Uploader", Model); %>
 
     <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-    <script type="text/javascript" src="../../Content/Scripts/SB_Uploader.js"></script>
+    <script src="../../Content/Scripts/dropzone.js"></script>
+    <script src="../../Content/Scripts/uploader.js"></script>
     <script type="text/javascript">
 
-        $('[data-toggle="tooltip"]').tooltip();
+        var Uploader = Uploader || {};
+        
+        Uploader.successActions = Uploader.successActions || [];
 
-        $(".sb-check").click(function () {
-            $(this).toggleClass('checked');
+        Uploader.successActions.push({
+            key: 1,
+            selector: '1',
+            action: 'modal',
+            parameters: ['hide']
         });
 
-        toastr.options = {
-            "positionClass": "toast-top-center",
-            "showDuration": "300",
-            "hideDuration": "1000",
-            "timeOut": "5000",
-            "extendedTimeOut": "1000",
-            "showEasing": "swing",
-            "hideEasing": "linear",
-            "showMethod": "fadeIn",
-            "hideMethod": "fadeOut"
-        }
-
-        $(".uploader").SB_Uploader({
-            filesallowed: 4
+        Uploader.successActions.push({
+            key: 2,
+            selector: '[data-target="2"]',
+            action: 'addClass',
+            parameters: ['hidden']
         });
 
-        $("#prev").click(function () {
-            pageSwitch('step2.html');
+        Uploader.successActions.push({
+            key: 3,
+            selector: '[requireddocumentidlink="3"] a',
+            action: 'attr',
+            parameters: ['href', '{{FileUrl}}']
         });
 
-        $("#next").click(function () {
-            pageSwitch('step4.html');
+        Uploader.successActions.push({
+            key: 4,
+            selector: '[requireddocumentidlink="4"]',
+            action: 'removeClass',
+            parameters: ['hidden']
         });
 
-        function pageSwitch(url) {
-            window.location.href = url;
-        };
+        Uploader.successActions.push({
+            key: 5,
+            selector: '[requireddocumentid="5"]',
+            action: 'html',
+            parameters: ['<% = DateTime.Now.ToShortDateString() %>']
+        });
 
     </script>
 

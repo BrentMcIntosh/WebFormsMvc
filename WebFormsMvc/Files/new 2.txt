@@ -1,0 +1,72 @@
+
+
+//  0 @Vendor                                                         ID, 
+//  1 @TotalEmployers                                                         TotalEmployers, 
+//  2 @TotalEmployees                                                         TotalEmployees, 
+//  3 @TotalEmployeesWithDependents                                                         TotalEmployeesWithDependents, 
+//  4 @TotalDependents                                                         TotalDependents, 
+//  5 @WeightedAverageAnnualCostPerDependent                                                         WeightedAverageAnnualCostPerDependent, 
+//  6 @AverageAnnualCostPerDependent                                                         AverageAnnualCostPerDependent, 
+//  7 @TotalFullAudits                                                         TotalFullAudits, 
+//  8 @TotalOngoingAudits                                                         TotalOngoingAudits, 
+//  9 @TotalInboundDocuments                                                         TotalInboundDocuments, 
+// 10 @TotalOutboundDocuments                                                         TotalOutboundDocuments, 
+// 11 @TotalIneligibleDependents                                                         TotalIneligibleDependents, 
+// 12 @DocumentsOutsideSLA                                                         DocumentsOutsideSLA, 
+// 13 @TotalProcessedDocuments                                                         TotalProcessedDocuments, 
+// 14 @AverageNumberOfDependentsPerEmployee                                                         AverageNumberOfDependentsPerEmployee, 
+// 15 @AverageInboundDocumentsPerEmployeeWithDependents                                                         AverageInboundDocumentsPerEmployeeWithDependents, 
+// 16 @AverageInboundDocumentsPerDependent                                                         AverageInboundDocumentsPerDependent, 
+// 17 @PercentIneligibleDependents                                                         PercentIneligibleDependents, 
+// 18 @ProjectedSavings                                                         ProjectedSavings, 
+// 19 @WeightedProjectedSavings                                                         WeightedProjectedSavings
+   
+
+
+
+
+ID = (int)values[(int)FromProcValuePositions.Vendor                                          ]
+ID = (int)values[(int)FromProcValuePositions.TotalEmployers                                  ]
+ID = (int)values[(int)FromProcValuePositions.TotalEmployees                                  ]
+ID = (int)values[(int)FromProcValuePositions.TotalEmployeesWithDependents                    ]
+ID = (int)values[(int)FromProcValuePositions.TotalDependents                                 ]
+ID = (int)values[(int)FromProcValuePositions.WeightedAverageAnnualCostPerDependent           ]
+ID = (int)values[(int)FromProcValuePositions.AverageAnnualCostPerDependent                   ]
+ID = (int)values[(int)FromProcValuePositions.TotalFullAudits                                 ]
+ID = (int)values[(int)FromProcValuePositions.TotalOngoingAudits                              ]
+ID = (int)values[(int)FromProcValuePositions.TotalInboundDocuments                           ]
+ID = (int)values[(int)FromProcValuePositions.TotalOutboundDocuments                          ]
+ID = (int)values[(int)FromProcValuePositions.TotalIneligibleDependents                       ]
+ID = (int)values[(int)FromProcValuePositions.DocumentsOutsideSLA                             ]
+ID = (int)values[(int)FromProcValuePositions.TotalProcessedDocuments                         ]
+ID = (int)values[(int)FromProcValuePositions.AverageNumberOfDependentsPerEmployee            ]
+ID = (int)values[(int)FromProcValuePositions.AverageInboundDocumentsPerEmployeeWithDependents]
+ID = (int)values[(int)FromProcValuePositions.AverageInboundDocumentsPerDependent             ]
+ID = (int)values[(int)FromProcValuePositions.PercentIneligibleDependents                     ]
+ID = (int)values[(int)FromProcValuePositions.ProjectedSavings                                ]
+ID = (int)values[(int)FromProcValuePositions.WeightedProjectedSavings                        ]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+ID = (int)values[(int)FromProcValuePositions.]
+
+
+
+
+
+
+
+
+
+
+
+
+

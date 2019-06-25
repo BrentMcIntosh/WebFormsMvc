@@ -1,0 +1,7 @@
+https://www.smartben.com/Home/Login?ReturnUrl=%2F#divForgotPassword
+
+
+<a role="button" href="#divForgotPassword" data-toggle="modal">password recovery</a>
+
+
+<a class="nav-link" href="#">Home</a>

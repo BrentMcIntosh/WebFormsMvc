@@ -1,0 +1,8 @@
+"Employer ID",
+            "Employer Name",
+            "Document Count",
+            "Oldest Document Date",
+            "Note Count",
+            "Oldest Note Date",
+            "QC Queue Count",
+            "Oldest QC Date"
