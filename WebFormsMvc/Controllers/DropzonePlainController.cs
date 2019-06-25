@@ -28,5 +28,18 @@ namespace WebFormsMvc.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public class FileStuff
+        {
+            public string Name { get; set; }
+        }
+
+        [HttpPost]
+        public string DeleteFile(FileStuff file)
+        {
+
+
+            return $"okay {file.Name} was removed";
+        }
     }
 }

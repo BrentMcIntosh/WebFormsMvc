@@ -192,8 +192,7 @@
     <Content Include="Content\CSS\sbadmin_B4.min.css" />
     <Content Include="Content\CSS\sentry_client.css" />
     <Content Include="Content\CSS\sentry_specific.css" />
-    <Content Include="Content\Scripts\dropzone.js" />
-    <Content Include="Content\Scripts\DZX.js" />
+    <Content Include="Content\Scripts\NotDropZone.js" />
     <Content Include="Content\Scripts\SB_Uploader.js" />
     <Content Include="Content\Scripts\uploader.js" />
     <Content Include="favicon.ico" />

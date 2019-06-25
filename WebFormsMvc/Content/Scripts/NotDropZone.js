@@ -806,7 +806,7 @@ var Dropzone = function (_Emitter) {
                         //}
                         
                         if (true) {
-                            file._removeLink = Dropzone.createElement("<a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove><i class=\"fas fa-times\"></i></a>");
+                            file._removeLink = Dropzone.createElement("<a class=\"dz-remove\" href=\"#\" data-dz-remove><i class=\"fas fa-times\"></i></a>");
                             file.previewElement.appendChild(file._removeLink);
                         }
 
@@ -850,8 +850,24 @@ var Dropzone = function (_Emitter) {
 
                 // Called whenever a file is removed.
                 removedfile: function removedfile(file) {
-                    if (file.previewElement != null && file.previewElement.parentNode != null) {
-                        file.previewElement.parentNode.removeChild(file.previewElement);
+
+                    if(confirm('Are you are sure that you want to delete ' + file.name + ' ?')) {
+
+                        if (file.previewElement != null && file.previewElement.parentNode != null) {
+
+                            console.log("removing file");
+                            console.log(file);
+
+
+                          $.post('/DropzonePlain/DeleteFile', 
+                             {Name:file.name},
+                           function(data,status){
+                             alert('file deleted');
+                             });
+
+                            file.previewElement.parentNode.removeChild(file.previewElement);
+                        }
+
                     }
                     return this._updateMaxFilesReachedClass();
                 },
@@ -922,7 +938,19 @@ var Dropzone = function (_Emitter) {
                 processing: function processing(file) {
                     if (file.previewElement) {
                         file.previewElement.classList.add("dz-processing");
+
                         if (file._removeLink) {
+                        
+                            console.log("adding");
+
+
+                            // ask the user for the details 
+
+
+
+
+                            console.log(file);
+                            
                             return file._removeLink.innerHTML = this.options.dictCancelUpload;
                         }
                     }
